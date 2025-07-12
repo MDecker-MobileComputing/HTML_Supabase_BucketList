@@ -37,8 +37,8 @@ async function authentifzierungWennNoetig() {
         console.log( "Benutzer ist nicht angemeldet, versuche Anmeldung via OAuth ..." );
 
         await supabaseClient.auth.signInWithOAuth({
-            provider: "github"
-            //options: { redirectTo: "https://mdecker-mobilecomputing.github.io/HTML_Supabase_BucketList/" }
+            provider: "github",
+            options: { redirectTo: "https://mdecker-mobilecomputing.github.io/HTML_Supabase_BucketList/" }
         });
 
     }
