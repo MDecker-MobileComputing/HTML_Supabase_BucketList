@@ -2,6 +2,9 @@
 
 <br>
 
+Web-App via *GitHub Pages*: https://mdecker-mobilecomputing.github.io/HTML_Supabase_BucketList/
+
+<br>
 
 ----
 
