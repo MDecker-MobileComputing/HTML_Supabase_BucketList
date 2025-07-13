@@ -59,22 +59,32 @@ async function ladeListe() {
 
     const supabaseClient = holeSupabaseClient();
     
-    const { data, fehler } = await supabaseClient
-                                    .from( "bucketlist" )
-                                    .select( "eintrags_nr, titel" )
-                                    .eq( "benutzer_id", benutzerId )
-                                    .order( "eintrags_nr", { ascending: true } );   
-    
-    console.log( "Geladene Daten:", data );
-    
-    if ( fehler ) {
+    try {
 
-        console.error( "Fehler beim Laden der Liste:", fehler );
-        alert( "Fehler beim Laden der Liste: " + fehler.message );
+        const { data, fehler } = await supabaseClient
+                                        .from( "bucketlist" )
+                                        .select( "eintrags_nr, titel" )
+                                        .eq( "benutzer_id", benutzerId )
+                                        .order( "eintrags_nr", { ascending: true } );   
+        
+        console.log( "Geladene Daten:", data );
+        
+        if ( fehler ) {
 
-    } else {
+            console.error( "Fehler beim Laden der Liste:", fehler );
+            alert( "Fehler beim Laden der Liste: " + fehler.message );
+            return;
+        } 
 
-        if ( data && data.length > 0 ) {
+        if ( !data ) {
+
+            console.error( "Fehler beim Laden der Liste." );
+            alert( "Fehler beim Laden der Liste." );
+            return;
+        }
+
+        
+        if ( data.length > 0 ) {
 
             for ( let i = 0; i < data.length; i++ ) {
 
@@ -85,10 +95,13 @@ async function ladeListe() {
                     inputEintragArray[ index ].value = eintrag.titel;
                 }
             }
-        } else {
 
-            console.log( "Keine Daten gefunden oder Array ist leer." );
         }
+    }
+    catch ( fehler ) {
+
+        console.error( "Unerwarteter Fehler beim Laden der Liste:", fehler );
+        alert( "Unerwarteter Fehler beim Laden der Liste." );
     }
 }
 
@@ -102,7 +115,7 @@ async function onSpeichernButton( event ) {
 
     if ( benutzerId === null ) {
 
-        alert( "Bitte zuerst anmelden!" );
+        alert( "Daten können nicht gespeichert werden." );
         return;
     }
 
