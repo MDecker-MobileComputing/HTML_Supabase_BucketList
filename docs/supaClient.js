@@ -1,6 +1,17 @@
 "use strict";
 
 
+/**
+ * Erstellt und gibt einen Supabase-Client zurück:
+ * 
+ * * Erstes Argument: Basis-URL des Supabase-Projekts, kann im Supabase-Dashboard des 
+ *   Projekts unter "Settings | Data API" gefunden werden.
+ * 
+ * * Zweite Argument: API-Key, kann in Supabase-Dashboard des Projekts unter
+ *   "Settings | API Keys" gefunden werden. 
+ * 
+ * @returns {SupabaseClient} Supabase-Client-Objekt, muss noch authentifiziert werden
+ */
 function holeSupabaseClient() {
 
     const supabaseClient = supabase.createClient(
