@@ -64,12 +64,10 @@ async function onRegistrierung( event ) {
         return;
     }
     
-    // *** Eigentliche Registrierung ***
-    const supabaseClient = supabase.createClient(
-            "https://annymgkbnrknvkjnhdhy.supabase.co",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFubnltZ2tibnJrbnZram5oZGh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyNDM4NzAsImV4cCI6MjA2NzgxOTg3MH0.tJTJmU_jrlEBHpFk3_TUWVLyvVDLoVPk64Dnq7hgf6U"
-    );
+    const supabaseClient = holeSupabaseClient();
 
+
+    // *** Eigentliche Registrierung ***
     const { data, fehler } = await supabaseClient.auth.signUp({
                 email   : email,
                 password: password1,
