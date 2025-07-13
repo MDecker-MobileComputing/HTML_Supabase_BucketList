@@ -45,19 +45,16 @@ create policy "Benutzer können eigene Bucketlist-Einträge abrufen"
   for select
   using (benutzer_id = auth.uid());
 
--- Richtlinie: Benutzer können nur eigene Bucketlist-Einträge einfügen
 create policy "Benutzer können eigene Bucketlist-Einträge einfügen"
   on bucketlist
   for insert
   with check (benutzer_id = auth.uid());
 
--- Richtlinie: Benutzer können nur eigene Bucketlist-Einträge bearbeiten
 create policy "Benutzer können eigene Bucketlist-Einträge bearbeiten"
   on bucketlist
   for update
   using (benutzer_id = auth.uid());
 
--- Richtlinie: Benutzer können nur eigene Bucketlist-Einträge löschen
 create policy "Benutzer können eigene Bucketlist-Einträge löschen"
   on bucketlist
   for delete

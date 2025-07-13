@@ -135,20 +135,32 @@ async function onSpeichernButton( event ) {
         eintraegeArray.push( datensatz );
     }
 
+    try {
 
-    const { _, fehler } = await supabaseClient
-                                    .from( "bucketlist" )
-                                    .upsert( eintraegeArray, { 
-                                        onConflict: "benutzer_id,eintrags_nr" // Schlüsselfelder
-                                    });
-    if ( fehler ) {
+        const { data, fehler } = await supabaseClient
+                                        .from( "bucketlist" )
+                                        .upsert( eintraegeArray, { 
+                                            onConflict: "benutzer_id,eintrags_nr" // Schlüsselfelder
+                                        });
+        if ( fehler ) {
 
-        console.error( "Fehler beim Speichern:", fehler );
-        alert( "Fehler beim Speichern: " + fehler.message );
+            console.error( "Fehler beim Speichern:", fehler );
+            alert( "Fehler beim Speichern: " + fehler.message );
 
-    } else {
+        } else if ( !data ) {
 
-        alert( "Liste gespeichert" );
+            console.error( "Fehler beim Speichern." );
+            alert( "Fehler beim Speichern." );
+
+        } else {
+
+            alert( "Liste gespeichert" );
+        }
+    }
+    catch ( fehler ) {
+
+        console.error( "Fehler beim Speichern der Liste:", fehler );
+        alert( "Fehler beim Speichern der Liste." );
     }
 }
 
