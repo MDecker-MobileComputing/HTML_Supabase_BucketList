@@ -81,15 +81,13 @@ async function ladeListe() {
                 const eintrag = data[i];
                 if ( eintrag && eintrag.eintrags_nr && eintrag.titel ) {
 
-                    const index = eintrag.eintrags_nr - 1; // Eintragsnummern beginnen bei 1, Array bei 0
+                    const index = eintrag.eintrags_nr - 1; 
                     inputEintragArray[ index ].value = eintrag.titel;
                 }
             }
         } else {
 
             console.log( "Keine Daten gefunden oder Array ist leer." );
-            console.log( "data:", data );
-            console.log( "data.length:", data ? data.length : "data ist null/undefined" );
         }
     }
 }
