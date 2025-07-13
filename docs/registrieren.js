@@ -68,34 +68,36 @@ async function onRegistrierung( event ) {
 
 
     // *** Eigentliche Registrierung ***
-    const { data, fehler } = await supabaseClient.auth.signUp({
-                email   : email,
-                password: password1,
-                options : { emailRedirectTo: "liste.html" }
-        });
+    try {
 
-    if ( fehler ) {
+        const { data, fehler } = await supabaseClient.auth.signUp({
+                    email   : email,
+                    password: password1,
+                    options : { emailRedirectTo: "liste.html" }
+            });
 
-        console.error( "Fehler bei der Registrierung:", fehler );
-        alert( "Registrierung fehlgeschlagen: " + fehler.message );
-        return;
-    }
+        if ( fehler ) {
 
-    // Erfolgreiche Registrierung
-    if ( data.user ) {
-        
-        console.log( "Benutzer registriert:", data.user.email );
-        
-        if ( data.session ) {
+            console.error( "Fehler bei der Registrierung:", fehler );
+            alert( "Registrierung fehlgeschlagen: " + fehler.message );
+            return;
+        }
+
+        if ( data && data.user && data.user.id && data.session ) {
             
             alert( "Registrierung erfolgreich! Sie werden weitergeleitet..." );
             window.location.href = "liste.html";
 
         } else {
-            
-            alert( "Registrierung erfolgreich! Bitte bestätigen Sie Ihre E-Mail-Adresse." );
+
+            console.error( "Registrierung fehlgeschlagen: Nutzer-ID oder Session nicht gefunden." );
+            alert( "Registrierung fehlgeschlagen." );
         }
     }
-
+    catch ( netzwerkFehler ) {
+     
+        console.error( "Netzwerkfehler bei der Registrierung:", netzwerkFehler );
+        alert( "Registrierung fehlgeschlagen: " + netzwerkFehler.message );
+    }
 }
 
