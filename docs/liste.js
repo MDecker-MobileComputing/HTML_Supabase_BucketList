@@ -95,7 +95,6 @@ async function ladeListe() {
                     inputEintragArray[ index ].value = eintrag.titel;
                 }
             }
-
         }
     }
     catch ( fehler ) {
