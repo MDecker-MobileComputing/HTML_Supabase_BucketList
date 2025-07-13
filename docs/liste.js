@@ -1,8 +1,11 @@
 "use strict";
 
-let spanEmail = null;
-let supaClient = null;
+let spanEmail    = null;
+let supaClient   = null;
 let logoutButton = null;
+
+let supabaseClient = null;
+let benutzerId     = null;
 
 
 /**
@@ -15,12 +18,17 @@ window.addEventListener( "load", async function () {
 
     logoutButton.addEventListener( "click", abmelden );
 
-    const supabaseClient = holeSupabaseClient();
+    const registrationForm = document.getElementById( "bucketlistFormular" );
+    registrationForm.addEventListener( "submit", onSpeichernButton );
+
+    supabaseClient = holeSupabaseClient();
 
     const nutzer = await supabaseClient.auth.getUser();
     if ( nutzer.data.user ) {
 
         spanEmail.textContent = nutzer.data.user.email;
+        benutzerId            = nutzer.data.user.id;
+        console.log( "Benutzer-ID:", benutzerId );
 
     } else {
 
@@ -29,6 +37,49 @@ window.addEventListener( "load", async function () {
 
     console.log( "Seite für Liste initialisiert." );
 });
+
+
+async function onSpeichernButton( event ) {
+
+    event.preventDefault();
+
+    if ( benutzerId === null ) {
+
+        alert( "Bitte zuerst anmelden!" );
+        return;
+    }
+
+    const eintraegeArray = [];
+    for ( let i = 1; i <= 5; i++ ) {
+
+        const eintragText = document.getElementById( "eintrag" + i );
+
+        const datensatz = {
+
+            benutzer_id: benutzerId,
+            eintrags_nr: i,
+            titel      : eintragText.value
+        }
+
+        eintraegeArray.push( datensatz );
+    }
+
+
+    const { _, fehler } = await supabaseClient
+                                    .from( "bucketlist" )
+                                    .upsert( eintraegeArray, { 
+                                        onConflict: "benutzer_id,eintrags_nr" // Schlüsselfelder
+                                    });
+    if ( fehler ) {
+
+        console.error( "Fehler beim Speichern:", fehler );
+        alert( "Fehler beim Speichern: " + fehler.message );
+
+    } else {
+
+        alert( "Liste gespeichert" );
+    }
+}
 
 
 /**
@@ -59,3 +110,4 @@ async function abmelden() {
         alert( "Unerwarteter Fehler beim Abmelden" );
     }
 }
+

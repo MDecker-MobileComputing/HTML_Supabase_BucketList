@@ -19,3 +19,68 @@ a {
 #spanEmail {
     font-style: italic;
 }
+
+/* Bucket list form styles */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
+}
+
+.form-group label {
+    display: inline-block;
+    width: 50px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Responsive input fields for bucket list entries */
+#eintrag1, #eintrag2, #eintrag3, #eintrag4, #eintrag5 {
+    width: 100%;
+    max-width: 500px;
+    min-width: 200px;
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#eintrag1:focus, #eintrag2:focus, #eintrag3:focus, #eintrag4:focus, #eintrag5:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+/* Media queries for different viewport widths */
+@media (max-width: 768px) {
+    #eintrag1, #eintrag2, #eintrag3, #eintrag4, #eintrag5 {
+        width: 100%;
+        max-width: none;
+        min-width: 150px;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+        width: auto;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    #eintrag1, #eintrag2, #eintrag3, #eintrag4, #eintrag5 {
+        width: 80%;
+        max-width: 400px;
+    }
+}
+
+@media (min-width: 1025px) {
+    #eintrag1, #eintrag2, #eintrag3, #eintrag4, #eintrag5 {
+        width: 60%;
+        max-width: 500px;
+    }
+}
