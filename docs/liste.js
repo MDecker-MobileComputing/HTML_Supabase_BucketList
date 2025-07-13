@@ -7,6 +7,8 @@ let logoutButton = null;
 let supabaseClient = null;
 let benutzerId     = null;
 
+let inputEintragArray = [];
+
 
 /**
  * Event-Handler, der aufgerufen wird, wenn die Webseite geladen wurde.
@@ -15,6 +17,14 @@ window.addEventListener( "load", async function () {
 
     spanEmail    = document.getElementById( "spanEmail"    );
     logoutButton = document.getElementById( "logoutButton" );
+
+    inputEintragArray = [
+        document.getElementById( "eintrag1" ),
+        document.getElementById( "eintrag2" ),
+        document.getElementById( "eintrag3" ),
+        document.getElementById( "eintrag4" ),
+        document.getElementById( "eintrag5" )
+    ];
 
     logoutButton.addEventListener( "click", abmelden );
 
@@ -35,10 +45,59 @@ window.addEventListener( "load", async function () {
         spanEmail.textContent = "???";
     }
 
+    await ladeListe();
+
     console.log( "Seite für Liste initialisiert." );
 });
 
 
+/**
+ * Lädt die Liste der Einträge für den angemeldeten Benutzer aus der Datenbank
+ * und zeigt sie an.
+ */
+async function ladeListe() {
+
+    const supabaseClient = holeSupabaseClient();
+    
+    const { data, fehler } = await supabaseClient
+                                    .from( "bucketlist" )
+                                    .select( "eintrags_nr, titel" )
+                                    .eq( "benutzer_id", benutzerId )
+                                    .order( "eintrags_nr", { ascending: true } );   
+    
+    console.log( "Geladene Daten:", data );
+    
+    if ( fehler ) {
+
+        console.error( "Fehler beim Laden der Liste:", fehler );
+        alert( "Fehler beim Laden der Liste: " + fehler.message );
+
+    } else {
+
+        if ( data && data.length > 0 ) {
+
+            for ( let i = 0; i < data.length; i++ ) {
+
+                const eintrag = data[i];
+                if ( eintrag && eintrag.eintrags_nr && eintrag.titel ) {
+
+                    const index = eintrag.eintrags_nr - 1; // Eintragsnummern beginnen bei 1, Array bei 0
+                    inputEintragArray[ index ].value = eintrag.titel;
+                }
+            }
+        } else {
+
+            console.log( "Keine Daten gefunden oder Array ist leer." );
+            console.log( "data:", data );
+            console.log( "data.length:", data ? data.length : "data ist null/undefined" );
+        }
+    }
+}
+
+
+/**
+ * Aktuelle Eingabe in Liste in Datenbanktabelle speichern.
+ */
 async function onSpeichernButton( event ) {
 
     event.preventDefault();
@@ -52,13 +111,14 @@ async function onSpeichernButton( event ) {
     const eintraegeArray = [];
     for ( let i = 1; i <= 5; i++ ) {
 
-        const eintragText = document.getElementById( "eintrag" + i );
+        const index = i - 1; 
+        const eintragText = inputEintragArray[ index ].value;
 
         const datensatz = {
 
             benutzer_id: benutzerId,
             eintrags_nr: i,
-            titel      : eintragText.value
+            titel      : eintragText
         }
 
         eintraegeArray.push( datensatz );
