@@ -15,20 +15,22 @@
 
     <form id="anmeldeFormular">
 
-      <div class="form-group">
-        <label for="email">E-Mail-Adresse:</label>
-        <input type="email" id="inputEmail" required>
-      </div>
-      <br>
-      
-      <div class="form-group">
-        <label for="password">Passwort:</label>
-        <input type="password" id="inputPassword" required>
-      </div>
-      <br>
-      
-      <button type="submit">Einloggen</button>
-      <button type="reset" >Zurücksetzen</button>
+      <table>
+        <tr>
+          <td><label for="email">E-Mail-Adresse:</label></td>
+          <td><input type="email" id="inputEmail" required></td>
+        </tr>
+        <tr>
+          <td><label for="password">Passwort:</label></td>
+          <td><input type="password" id="inputPassword" required></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center; padding-top: 20px;">
+            <button type="submit">Einloggen</button>
+            <button type="reset">Zurücksetzen</button>
+          </td>
+        </tr>
+      </table>
 
     </form>
     <br><br>

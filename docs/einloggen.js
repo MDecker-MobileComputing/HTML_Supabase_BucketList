@@ -39,6 +39,7 @@ async function onAnmeldung( event ) {
         password: password,
     });
 
+
     if ( fehler ) {
         
         console.error( "Fehler bei Anmeldung:", fehler );
