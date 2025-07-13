@@ -3,6 +3,7 @@
 let spanEmail = null;
 let supaClient = null;
 
+
 /**
  * Event-Handler, der aufgerufen wird, wenn die Webseite geladen wurde.
  */

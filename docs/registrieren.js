@@ -17,8 +17,8 @@ window.addEventListener( "load", async function () {
     inputPassword2 = document.getElementById( "inputPassword2" );
 
     // Event-Handler für das Registrierungsformular
-    const registrationForm = document.getElementById( "registrationForm" );
-    registrationForm.addEventListener( "submit", handleRegistration );
+    const registrationForm = document.getElementById( "registrierungsFormular" );
+    registrationForm.addEventListener( "submit", onRegistrierung );
 
     console.log( "Seite für Registrierung initialisiert." );
 });
@@ -26,9 +26,9 @@ window.addEventListener( "load", async function () {
 
 
 /**
- * Event-Handler für die Registrierung
+ * Event-Handler für die Registrierung.
  */
-async function handleRegistration( event ) {
+async function onRegistrierung( event ) {
 
     event.preventDefault(); // Verhindert das Standard-Formular-Submit
     
@@ -38,7 +38,7 @@ async function handleRegistration( event ) {
     
     // Validierung: E-Mail-Adresse muss eingegeben werden
     if ( !email || email.trim() === "" ) {
-        alert("Bitte geben Sie eine E-Mail-Adresse ein!");
+        alert( "Bitte geben Sie eine E-Mail-Adresse ein!" );
         return;
     }
     
@@ -46,37 +46,38 @@ async function handleRegistration( event ) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if ( !emailRegex.test( email ) ) {
 
-        alert("Bitte geben Sie eine gültige E-Mail-Adresse ein!");
+        alert( "Bitte geben Sie eine gültige E-Mail-Adresse ein!" );
         return;
     }
 
     // Validierung: Passwörter müssen übereinstimmen
     if ( password1 !== password2 ) {
 
-        alert("Passwörter stimmen nicht überein!");
+        alert( "Passwörter stimmen nicht überein!" );
         return;
     }
     
     // Validierung: Passwort muss mindestens 6 Zeichen lang sein
     if ( password1.length < 6 ) {
 
-        alert("Passwort muss mindestens 6 Zeichen lang sein!");
+        alert( "Passwort muss mindestens 6 Zeichen lang sein!" );
         return;
     }
     
-    // Hier würde die Registrierung mit Supabase erfolgen
+    // *** Eigentliche Registrierung ***
     const supabaseClient = supabase.createClient(
             "https://annymgkbnrknvkjnhdhy.supabase.co",
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFubnltZ2tibnJrbnZram5oZGh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyNDM4NzAsImV4cCI6MjA2NzgxOTg3MH0.tJTJmU_jrlEBHpFk3_TUWVLyvVDLoVPk64Dnq7hgf6U"
     );
 
     const { data, fehler } = await supabaseClient.auth.signUp({
-                email: email,
+                email   : email,
                 password: password1,
-                options: { emailRedirectTo: 'liste.html' }
+                options : { emailRedirectTo: "liste.html" }
         });
 
     if ( fehler ) {
+
         console.error( "Fehler bei der Registrierung:", fehler );
         alert( "Registrierung fehlgeschlagen: " + fehler.message );
         return;

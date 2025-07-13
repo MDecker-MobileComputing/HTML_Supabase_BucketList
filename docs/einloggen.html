@@ -8,11 +8,38 @@
 </head>
 <body>
 
-  <h1>Bucket List mit Supabase: Anmelden</h1>
+  <h1>Bucket List mit Supabase: Einloggen</h1>
 
-  <a href="anmelden.html">Anmelden</a>
-  <br><br>
-  <a href="registrieren.html">Registrieren</a>
-  <br>
+
+  <div class="form-container">
+
+    <form id="anmeldeFormular">
+
+      <div class="form-group">
+        <label for="email">E-Mail-Adresse:</label>
+        <input type="email" id="inputEmail" required>
+      </div>
+      <br>
+      
+      <div class="form-group">
+        <label for="password">Passwort:</label>
+        <input type="password" id="inputPassword" required>
+      </div>
+      <br>
+      
+      <button type="submit">Einloggen</button>
+      <button type="reset" >Zurücksetzen</button>
+
+    </form>
+    <br><br>
+    
+    <div class="form-footer">
+      <p>Sie haben noch kein Konto? <a href="registrieren.html">Hier registrieren</a></p>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="einloggen.js"></script>
 
 </body>
