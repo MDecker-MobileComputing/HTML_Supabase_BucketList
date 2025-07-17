@@ -8,7 +8,9 @@ Für die Authentifzierung werden Email+Passwort verwendet.
 
 <br>
 
-Web-App via *GitHub Pages*: https://mdecker-mobilecomputing.github.io/HTML_Supabase_BucketList/
+Web-App via *GitHub Pages*: https://mdecker-mobilecomputing.github.io/HTML_Supabase_BucketList/ 
+
+(funktioniert nicht, weil zugehörige Supabase-Instanz pausiert wurde)
 
 <br>
 
