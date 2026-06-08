@@ -38,7 +38,8 @@ Einträge in der Tabelle gelöscht.
 
 <br>
 
-SQL-Befehle, um *Row Level Security (RSL)* aktivieren:
+SQL-Befehle, um [Row Level Security (RSL)](https://supabase.com/docs/guides/database/postgres/row-level-security) 
+zu aktivieren:
 ```
 alter table "bucketlist" enable row level security;
 
