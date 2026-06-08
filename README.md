@@ -38,7 +38,7 @@ Einträge in der Tabelle gelöscht.
 
 <br>
 
-SQL-Befehle um *Row Level Security* aktivieren:
+SQL-Befehle, um *Row Level Security (RSL)* aktivieren:
 ```
 alter table "bucketlist" enable row level security;
 
